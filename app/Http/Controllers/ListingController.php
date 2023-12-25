@@ -64,7 +64,7 @@ class ListingController extends Controller
         if($listing->user_id != auth()->id()){
                 abort(403,"unauthorized action");
         }
-
+        // dd($request->file('logo'));
         $formfileds = $request->validate([
             "title" => "required",
             "company" => "required",
@@ -78,11 +78,12 @@ class ListingController extends Controller
         ]);
       
         if($request->hasFile("logo")){
-            $formfileds["logo"] = $request->file("logo")->store("logos","public");
+            $formfileds["logo"] = $request->file("logo")->store("logos","public", $name='photo'.auth()->id());
+            // dd($formfileds['logo']);
         }
 
         $listing->update($formfileds);
-        return back("/")->with("message","listing updated succesfully");
+        return redirect("/")->with("message","listing updated succesfully");
     }
     // delete listing 
     public static function delete (Request $request, Listing $listing ){
