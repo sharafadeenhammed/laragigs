@@ -46,7 +46,7 @@ class ListingController extends Controller
         $formfileds["user_id"] = auth()->id();
 
         if($request->hasFile("logo")){
-            $formfileds["logo"] = $request->file("logo")->store("logos","public");
+            $formfileds["logo"] = $request->file("logo")->store("logos","public", $name='photo'.auth()->id());
 
         }
                 Listing::create($formfileds);
